@@ -17,6 +17,8 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
         "SQLALCHEMY_DATABASE_URI")
 
+    # app.config["LOCATION_KEY"] = os.environ.get("LOCATION_KEY")
+
     # Import models here for Alembic setup
     # from app.models.ExampleModel import ExampleModel
     from app.models.historical_sites import Sites
@@ -41,6 +43,10 @@ def create_app():
 
     from .routes import services_bp
     app.register_blueprint(services_bp)
+
+    from .routes import proxy_bp
+    app.register_blueprint(proxy_bp)
+
 
     CORS(app)
     return app

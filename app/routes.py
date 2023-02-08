@@ -7,6 +7,7 @@ from app.models.restaurants import Restaurants
 from app.models.historical_sites import Sites
 from app.models.stores import Stores
 from app.models.services import Services 
+
 # example_bp = Blueprint('example_bp', __name__)
 
 #RESTAURANTS
@@ -317,3 +318,23 @@ def get_model_from_id(cls, model_id):
         return abort(make_response({"msg": f"Could not find item with id: {model_id}"}, 404))
     
     return chosen_model
+
+    #LOCATION API route 
+load_dotenv()
+
+proxy_bp = Blueprint("proxy_bp", __name__)
+
+location_key = os.environ.get("LOCATION_KEY")
+
+@proxy_bp.route("/location", methods=["GET"])
+def get_lat_lon():
+    loc_query = request.args.get("q")
+    if not loc_query:
+        return {"message": "must provide q parameter (location)"}
+
+    response = requests.get(
+        "https://us1.locationiq.com/v1/search.php",
+        params={"q": loc_query, "key": location_key, "format": "json"}
+    )
+
+    return jsonify(response.json())
