@@ -30,12 +30,23 @@ def get_one_restaurant(restaurant_id):
 
 @restaurants_bp.route('', methods=['POST'])
 def create_one_restaurant():
-    request_body = request.get_json()
+    request_data = request.get_json()
 
     try:
-        new_restaurant = Restaurants(type = request_body["type"], address = request_body["address"], city = request_body['city'],
-        state = request_body['state'],zip_code = request_body['zipcode'], county = request_body['county'], phone_number = request_body['number'], email = request_body['email'],website = request_body['website'],
-        description = request_body['description'], latitude = request_body['latitude'], longitude = request_body['longitude'])
+        new_restaurant = Restaurants(
+            cuisine_shop_type = request_data["cuisine_shop_type"], 
+            name = request_data['name'],
+            address = request_data["address"], 
+            city = request_data['city'],
+            state = request_data['state'],
+            zip_code = request_data['zip_code'], 
+            county = request_data['county'], 
+            phone_number = request_data['phone_number'], 
+            email = request_data['email'],
+            website = request_data['website'],
+            description = request_data['description'], 
+            latitude = request_data['latitude'], 
+            longitude = request_data['longitude'])
     except KeyError:
         return jsonify({"details": "Invalid data"}), 400
 
@@ -48,22 +59,22 @@ def create_one_restaurant():
 def update_one_restaurant(restaurant_id):
     update_restaurant = get_model_from_id(Restaurants, restaurant_id)
 
-    request_body = request.get_json()
+    request_data = request.get_json()
 
     try:
-        update_restaurant.cuisine_shop_type = request_body['cuisine_shop_type']
-        update_restaurant.name = request_body['name']
-        update_restaurant.address = request_body["address"]
-        update_restaurant.city = request_body['city']
-        update_restaurant.state = request_body['state']
-        update_restaurant.zip_code = request_body['zip_code']
-        update_restaurant.county = request_body['county']
-        update_restaurant.phone_number = request_body['phone_number']
-        update_restaurant.email = request_body['email']
-        update_restaurant.website = request_body['website']
-        update_restaurant.description = request_body['description']
-        update_restaurant.latitude = request_body['latitude']
-        update_restaurant.longitude = request_body['longitude']
+        update_restaurant.cuisine_shop_type = request_data['cuisine_shop_type']
+        update_restaurant.name = request_data['name']
+        update_restaurant.address = request_data["address"]
+        update_restaurant.city = request_data['city']
+        update_restaurant.state = request_data['state']
+        update_restaurant.zip_code = request_data['zip_code']
+        update_restaurant.county = request_data['county']
+        update_restaurant.phone_number = request_data['phone_number']
+        update_restaurant.email = request_data['email']
+        update_restaurant.website = request_data['website']
+        update_restaurant.description = request_data['description']
+        update_restaurant.latitude = request_data['latitude']
+        update_restaurant.longitude = request_data['longitude']
 
     except KeyError:
         return jsonify({"msg": "Missing needed data"}), 400
@@ -78,7 +89,7 @@ def delete_one_restaurant(restaurant_id):
     db.session.delete(restaurant_to_delete)
     db.session.commit()
 
-    return jsonify({"details": f'Restaurant {restaurant_to_delete.restaurant_id} {restaurant_to_delete.title} successfully deleted'}), 200 
+    return jsonify({"details": f'Restaurant {restaurant_to_delete.restaurant_id} {restaurant_to_delete.name} successfully deleted'}), 200 
 
 
 
@@ -102,37 +113,46 @@ def get_one_historicalsites(sites_id):
 
 @historicalsites_bp.route('', methods=['POST'])
 def create_one_historicalsites():
-    request_body = request.get_json()
+    request_data = request.get_json()
 
     try:
-        new_historicalsites = Sites(type = request_body["type"], address = request_body["address"], city = request_body['city'],
-        state = request_body['state'],zip_code = request_body['zip_code'], county = request_body['county'],website = request_body['website'],
-        description = request_body['description'], latitude = request_body['latitude'], longitude = request_body['longitude'])
+        new_historicalsites = Sites(
+        name = request_data['name'], 
+        address = request_data['address'], 
+        city = request_data['city'],
+        state = request_data['state'],
+        zip_code = request_data['zip_code'], 
+        county = request_data['county'],
+        website = request_data['website'],
+        description = request_data['description'], 
+        latitude = request_data['latitude'], 
+        longitude = request_data['longitude'])
     except KeyError:
         return jsonify({"details": "Invalid data"}), 400
 
     db.session.add(new_historicalsites)
     db.session.commit()
 
-    return jsonify({"board": new_historicalsites.to_dict()}), 201
+    return jsonify(new_historicalsites.to_dict()), 201
+
 
 @historicalsites_bp.route('/<sites_id>', methods=['PUT'])
 def update_one_historicalsites(sites_id):
     update_historicalsites = get_model_from_id(Sites, sites_id)
 
-    request_body = request.get_json()
+    request_data = request.get_json()
 
     try:
-        update_historicalsites.name = request_body["name"]
-        update_historicalsites.address = request_body["address"]
-        update_historicalsites.city = request_body['city']
-        update_historicalsites.state = request_body['state']
-        update_historicalsites.zip_code = request_body['zip_code']
-        update_historicalsites.county = request_body['county']
-        update_historicalsites.website = request_body['website']
-        update_historicalsites.description = request_body['description']
-        update_historicalsites.latitude = request_body['latitude']
-        update_historicalsites.longitude = request_body['longitude']
+        update_historicalsites.name = request_data["name"]
+        update_historicalsites.address = request_data["address"]
+        update_historicalsites.city = request_data['city']
+        update_historicalsites.state = request_data['state']
+        update_historicalsites.zip_code = request_data['zip_code']
+        update_historicalsites.county = request_data['county']
+        update_historicalsites.website = request_data['website']
+        update_historicalsites.description = request_data['description']
+        update_historicalsites.latitude = request_data['latitude']
+        update_historicalsites.longitude = request_data['longitude']
 
     except KeyError:
         return jsonify({"msg": "Missing needed data"}), 400
@@ -147,7 +167,7 @@ def delete_one_historicalsites(sites_id):
     db.session.delete(historicalsites_to_delete)
     db.session.commit()
 
-    return jsonify({"details": f'Historical site {historicalsites_to_delete.historicalsites_id} {historicalsites_to_delete.title} successfully deleted'}), 200 
+    return jsonify({"details": f'Historical site {historicalsites_to_delete.sites_id} {historicalsites_to_delete.name} successfully deleted'}), 200 
 
 #SERVICES
 
@@ -170,13 +190,25 @@ def get_one_service(service_id):
 
 @services_bp.route('', methods=['POST'])
 def create_one_service():
-    request_body = request.get_json()
+    request_data = request.get_json()
 
     try:
-        new_restaurant = Services(service_type = request_body["service_type"],name = request_body["name"], address = request_body["address"], city = request_body['city'],
-        state = request_body['state'],zip_code = request_body['zip_code'], county = request_body['county'],
-        phone = request_body['phone'], email = request_body['email'],website = request_body['website'],latitude = request_body['latitude'], longitude = request_body['longitude'],
-        public_business = request_body["public_business"],non_profit = request_body["non_profit"],description = request_body['description'])
+        new_restaurant = Services(
+            service_type = request_data["service_type"],
+            name = request_data["name"], 
+            address = request_data["address"], 
+            city = request_data['city'],
+            state = request_data['state'],
+            zip_code = request_data['zip_code'], 
+            county = request_data['county'],
+            phone = request_data['phone'], 
+            email = request_data['email'],
+            website = request_data['website'],
+            latitude = request_data['latitude'], 
+            longitude = request_data['longitude'],
+            public_business = request_data["public_business"],
+            non_profit = request_data["non_profit"],
+            description = request_data['description'])
     except KeyError:
         return jsonify({"details": "Invalid data"}), 400
 
@@ -189,24 +221,24 @@ def create_one_service():
 def update_one_service(service_id):
     update_service = get_model_from_id(Services, service_id)
 
-    request_body = request.get_json()
+    request_data = request.get_json()
 
     try:
-        update_service.servicetype = request_body['service_type']
-        update_service.name = request_body['name']
-        update_service.address = request_body["address"]
-        update_service.city = request_body['city']
-        update_service.state = request_body['state']
-        update_service.zip_code = request_body['zip_code']
-        update_service.county = request_body['county']
-        update_service.phone= request_body['phone']
-        update_service.email = request_body['email']
-        update_service.website = request_body['website']
-        update_service.latitude = request_body['latitude']
-        update_service.longitude = request_body['longitude']
-        update_service.public_business = request_body['public_business']
-        update_service.non_profit = request_body['non_profit']
-        update_service.description = request_body['description']
+        update_service.servicetype = request_data['service_type']
+        update_service.name = request_data['name']
+        update_service.address = request_data["address"]
+        update_service.city = request_data['city']
+        update_service.state = request_data['state']
+        update_service.zip_code = request_data['zip_code']
+        update_service.county = request_data['county']
+        update_service.phone= request_data['phone']
+        update_service.email = request_data['email']
+        update_service.website = request_data['website']
+        update_service.latitude = request_data['latitude']
+        update_service.longitude = request_data['longitude']
+        update_service.public_business = request_data['public_business']
+        update_service.non_profit = request_data['non_profit']
+        update_service.description = request_data['description']
         
 
     except KeyError:
@@ -222,14 +254,7 @@ def delete_one_service(service_id):
     db.session.delete(service_to_delete)
     db.session.commit()
 
-    return jsonify({"details": f'Restaurant {service_to_delete.restaurant_id} {service_to_delete.title} successfully deleted'}), 200 
-
-
-
-
-
-
-
+    return jsonify({"details": f'Black owned Service {service_to_delete.service_id} {service_to_delete.name} successfully deleted'}), 200 
 
 
 #STORES
@@ -252,41 +277,52 @@ def get_one_store(store_id):
 
 @stores_bp .route('', methods=['POST'])
 def create_one_store():
-    request_body = request.get_json()
+    request_data = request.get_json()
 
     try:
-        new_store = Stores(store_type = request_body["store_type"], address = request_body["address"], city = request_body['city'],
-        state = request_body['state'],zip_code = request_body['zip_code'], county = request_body['county'],phone = request_body['phone'],email = request_body['email'], website = request_body['website'],
-        description = request_body['description'], latitude = request_body['latitude'], longitude = request_body['longitude'])
+        new_store = Stores(
+            store_type = request_data['store_type'],
+            name = request_data['name'],
+            address = request_data['address'], 
+            city = request_data['city'],
+            state = request_data['state'],
+            zip_code = request_data['zip_code'], 
+            county = request_data['county'],
+            phone = request_data['phone'],
+            email = request_data['email'], 
+            website = request_data['website'],
+            description = request_data['description'], 
+            latitude = request_data['latitude'], 
+            longitude = request_data['longitude'])
     except KeyError:
         return jsonify({"details": "Invalid data"}), 400
 
     db.session.add(new_store)
     db.session.commit()
 
-    return jsonify({"board": new_store.to_dict()}), 201
+    return jsonify({"stores": new_store.to_dict()}), 201
 
 
 @stores_bp.route('/<store_id>', methods=['PUT'])
 def update_one_stores(store_id):
     update_stores = get_model_from_id(Stores, store_id)
 
-    request_body = request.get_json()
+    request_data = request.get_json()
 
     try:
-        update_stores.store_type = request_body['store_type']
-        update_stores.name = request_body['name']
-        update_stores.address = request_body["address"]
-        update_stores.city = request_body['city']
-        update_stores.state = request_body['state']
-        update_stores.zip_code = request_body['zip_code']
-        update_stores.county = request_body['county']
-        update_stores.phone = request_body['phone']
-        update_stores.email = request_body['email']
-        update_stores.website = request_body['website']
-        update_stores.description = request_body['description']
-        update_stores.latitude = request_body['latitude']
-        update_stores.longitude = request_body['longitude']
+        update_stores.store_type = request_data['store_type']
+        update_stores.name = request_data['name']
+        update_stores.address = request_data["address"]
+        update_stores.city = request_data['city']
+        update_stores.state = request_data['state']
+        update_stores.zip_code = request_data['zip_code']
+        update_stores.county = request_data['county']
+        update_stores.phone = request_data['phone']
+        update_stores.email = request_data['email']
+        update_stores.website = request_data['website']
+        update_stores.description = request_data['description']
+        update_stores.latitude = request_data['latitude']
+        update_stores.longitude = request_data['longitude']
 
     except KeyError:
         return jsonify({"msg": "Missing needed data"}), 400
@@ -301,7 +337,7 @@ def delete_one_restaurant(store_id):
     db.session.delete(store_to_delete)
     db.session.commit()
 
-    return jsonify({"details": f'Store {store_to_delete.store_id} {store_to_delete.title} successfully deleted'}), 200 
+    return jsonify({"details": f'Store {store_to_delete.store_id} {store_to_delete.name} successfully deleted'}), 200 
 
 
 
