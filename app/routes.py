@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, make_response,abort
 from app import db
 import os,requests
 from dotenv import load_dotenv
+from . import create_app
 
 from app.models.restaurants import Restaurants
 from app.models.historical_sites import Sites
@@ -355,19 +356,18 @@ def get_model_from_id(cls, model_id):
     
     return chosen_model
 
-    #LOCATION API route 
-load_dotenv()
+#     #LOCATION API route 
 
-proxy_bp = Blueprint("proxy_bp", __name__)
-
-location_key = os.environ.get("LOCATION_KEY")
-
-@proxy_bp.route("/location", methods=["GET"])
+location_bp = Blueprint("location_bp", __name__)
+@location_bp.route("/location", methods=["GET"])
 def get_lat_lon():
+    app = create_app()
+    location_key = app.config.get("LOCATION_KEY")
     loc_query = request.args.get("q")
+    if not location_key:
+        return jsonify({"error": "Location key not found in the app configuration"}), 400
     if not loc_query:
         return {"message": "must provide q parameter (location)"}
-
     response = requests.get(
         "https://us1.locationiq.com/v1/search.php",
         params={"q": loc_query, "key": location_key, "format": "json"}
