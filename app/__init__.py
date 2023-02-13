@@ -12,6 +12,8 @@ load_dotenv()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
@@ -49,7 +51,5 @@ def create_app():
 
     from .routes import location_bp
     app.register_blueprint(location_bp)
-
-    CORS(app, origins=["https://sblackownedproxy.herokuapp.com"])
 
     return app
