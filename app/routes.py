@@ -116,25 +116,31 @@ def get_one_historicalsites(sites_id):
 def create_one_historicalsites():
     request_data = request.get_json()
 
+    required_keys = ['name', 'address', 'city', 'state', 'zip_code', 'county', 'website', 'description', 'latitude', 'longitude']
+    if not all(key in request_data for key in required_keys):
+        return jsonify({"details": "Invalid data. Missing required keys"}), 400
+
     try:
         new_historicalsites = Sites(
-        name = request_data['name'], 
-        address = request_data['address'], 
-        city = request_data['city'],
-        state = request_data['state'],
-        zip_code = request_data['zip_code'], 
-        county = request_data['county'],
-        website = request_data['website'],
-        description = request_data['description'], 
-        latitude = request_data['latitude'], 
-        longitude = request_data['longitude'])
-    except KeyError:
-        return jsonify({"details": "Invalid data"}), 400
+            name=request_data['name'], 
+            address=request_data['address'], 
+            city=request_data['city'],
+            state=request_data['state'],
+            zip_code=request_data['zip_code'], 
+            county=request_data['county'],
+            website=request_data['website'],
+            description=request_data['description'], 
+            latitude=request_data['latitude'], 
+            longitude=request_data['longitude']
+        )
+    except ValueError as e:
+        return jsonify({"details": "Invalid data. Invalid values provided"}), 400
 
     db.session.add(new_historicalsites)
     db.session.commit()
 
     return jsonify(new_historicalsites.to_dict()), 201
+
 
 
 @historicalsites_bp.route('/<sites_id>', methods=['PUT'])
@@ -187,7 +193,7 @@ def get_all_services():
 @services_bp.route('/<service_id>', methods=['GET'])
 def get_one_service(service_id):
     chosen_service = get_model_from_id(Services, service_id) 
-    return jsonify({"restaurant": chosen_service.to_dict()}), 200
+    return jsonify({"services": chosen_service.to_dict()}), 200
 
 @services_bp.route('', methods=['POST'])
 def create_one_service():

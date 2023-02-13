@@ -22,6 +22,7 @@ def create_app():
 
     # Import models here for Alembic setup
     # from app.models.ExampleModel import ExampleModel
+
     from app.models.historical_sites import Sites
     from app.models.restaurants import Restaurants 
     from app.models.services import Services 
