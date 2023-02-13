@@ -50,6 +50,6 @@ def create_app():
     from .routes import location_bp
     app.register_blueprint(location_bp)
 
-    cors = CORS(app, resources={r"/*": {"origins": "*"}})
+    CORS(app, origins=["https://sblackownedproxy.herokuapp.com"])
 
     return app
