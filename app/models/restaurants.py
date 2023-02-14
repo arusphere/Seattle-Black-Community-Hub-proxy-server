@@ -7,14 +7,14 @@ class Restaurants(db.Model):
     address = db.Column(db.String)
     city = db.Column(db.String)
     state = db.Column(db.String)
-    zip_code = db.Column(db.String)
+    zip_code = db.Column(db.Integer)
     county = db.Column(db.String)
     phone_number = db.Column(db.String)
     email = db.Column(db.String)
     website = db.Column(db.String)
     description = db.Column(db.String)
-    latitude = db.Column(db.String)
-    longitude = db.Column(db.String)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
 
     def to_dict(self):
         return {

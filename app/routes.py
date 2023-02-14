@@ -222,7 +222,7 @@ def create_one_service():
     db.session.add(new_restaurant)
     db.session.commit()
 
-    return jsonify({"restaurant": new_restaurant.to_dict()}), 201
+    return jsonify({"service": new_restaurant.to_dict()}), 201
 
 @services_bp.route('/<service_id>', methods=['PUT'])
 def update_one_service(service_id):
