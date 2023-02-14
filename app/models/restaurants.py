@@ -13,8 +13,8 @@ class Restaurants(db.Model):
     email = db.Column(db.String)
     website = db.Column(db.String)
     description = db.Column(db.String)
-    latitude = db.Column(db.String)
-    longitude = db.Column(db.String)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
 
     def to_dict(self):
         return {
