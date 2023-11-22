@@ -2,7 +2,7 @@ alembic==1.5.4
 antiorm==1.2.1
 attrs==21.2.0
 autopep8==1.5.5
-certifi==2020.12.5
+certifi==2023.7.22
 chardet==4.0.0
 charset-normalizer==2.1.1
 click==7.1.2
