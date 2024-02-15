@@ -19,7 +19,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
         "SQLALCHEMY_DATABASE_URI")
 
-    app.config["LOCATION_KEY"] = os.environ.get("LOCATION_KEY")
+    # app.config["LOCATION_KEY"] = os.environ.get("LOCATION_KEY")
 
 
     # Import models here for Alembic setup
@@ -49,7 +49,7 @@ def create_app():
     from .routes import services_bp
     app.register_blueprint(services_bp)
 
-    from .routes import location_bp
-    app.register_blueprint(location_bp)
+    # from .routes import location_bp
+    # app.register_blueprint(location_bp)
 
     return app
