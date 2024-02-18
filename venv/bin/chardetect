@@ -1,4 +1,4 @@
-#!/Users/ariamyonas/Developer/capstone/Seattle-s-Black-Owned-Hub/sboh-back-end/venv/bin/python3.10
+#!/Users/ariyo/developer/Ada/Capstone/Seattle-Black-Community-Hub-proxy-server/venv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys

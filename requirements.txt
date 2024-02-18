@@ -1,5 +1,6 @@
 alembic==1.5.4
 antiorm==1.2.1
+asgiref==3.7.2
 attrs==21.2.0
 autopep8==1.5.5
 certifi==2023.7.22
@@ -19,7 +20,9 @@ itsdangerous==1.1.0
 Jinja2==2.11.3
 Mako==1.1.4
 MarkupSafe==1.1.1
+numpy==1.26.4
 packaging==20.9
+pandas==2.2.0
 pluggy==0.13.1
 psycopg2-binary==2.9.5
 py==1.11.0
@@ -29,10 +32,12 @@ pytest==7.1.1
 python-dateutil==2.8.1
 python-dotenv==0.15.0
 python-editor==1.0.4
+pytz==2024.1
 requests==2.25.1
-six==1.15.0
+six==1.16.0
 SQLAlchemy==1.3.23
 toml==0.10.2
 tomli==2.0.1
+tzdata==2024.1
 urllib3==1.26.4
 Werkzeug==1.0.1
