@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 05e83daff5e9
+Revision ID: f0495b4fb36d
 Revises: 
-Create Date: 2023-02-09 21:59:41.509731
+Create Date: 2024-02-17 20:35:39.429433
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '05e83daff5e9'
+revision = 'f0495b4fb36d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,8 +31,6 @@ def upgrade():
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('website', sa.String(), nullable=True),
     sa.Column('description', sa.String(), nullable=True),
-    sa.Column('latitude', sa.String(), nullable=True),
-    sa.Column('longitude', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('restaurant_id')
     )
     op.create_table('services',
@@ -47,8 +45,6 @@ def upgrade():
     sa.Column('phone', sa.String(), nullable=True),
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('website', sa.String(), nullable=True),
-    sa.Column('latitude', sa.String(), nullable=True),
-    sa.Column('longitude', sa.String(), nullable=True),
     sa.Column('public_business', sa.Boolean(), nullable=True),
     sa.Column('non_profit', sa.Boolean(), nullable=True),
     sa.Column('description', sa.String(), nullable=True),
@@ -64,8 +60,6 @@ def upgrade():
     sa.Column('county', sa.String(), nullable=True),
     sa.Column('website', sa.String(), nullable=True),
     sa.Column('description', sa.String(), nullable=True),
-    sa.Column('latitude', sa.String(), nullable=True),
-    sa.Column('longitude', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('sites_id')
     )
     op.create_table('stores',
@@ -81,8 +75,6 @@ def upgrade():
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('website', sa.String(), nullable=True),
     sa.Column('description', sa.String(), nullable=True),
-    sa.Column('latitude', sa.String(), nullable=True),
-    sa.Column('longitude', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('store_id')
     )
     # ### end Alembic commands ###
